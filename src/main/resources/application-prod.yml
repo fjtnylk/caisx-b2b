@@ -1,0 +1,33 @@
+#tomcat
+server:
+  context-path: /csxb2b
+#mysql
+mysql:
+  write-url: jdbc:mysql://localhost:3306/csxprd_user?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&autoReconnectForPools=true&zeroDateTimeBehavior=convertToNull
+  write-username: csx
+  write-password: '%$#@!yhcsxadmin'
+  read-url: jdbc:mysql://localhost:3306/csxprd_common?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&autoReconnectForPools=true&zeroDateTimeBehavior=convertToNull
+  read-username: csx
+  read-password: '%$#@!yhcsxadmin'
+  filters: stat
+  maxActive: 5
+  initialSize: 2
+  maxWait: 60000
+  minIdle: 1
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 'x'
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxOpenPreparedStatements: 20
+#redis
+redis:
+  ip: 10.0.38.200
+  port: 6379
+  maxTotal: 20
+  maxIdle: 10
+  testOnBorrow: true
+  password: xceof
+  timeout: 5000

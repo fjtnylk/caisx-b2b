@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration scan="true" scanPeriod="1 minutes" debug="false">
+    <contextName>jshop-app-b2b</contextName>
+    <property name="file_path" value="/var/log/jshop-app-b2b"/>
+    <property name="encoder_pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-5level] [%logger.%M:%L] | %msg%n"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>${encoder_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rolling" class="ch.qos.logback.core.FileAppender">
+        <file>${file_path}/jshop_app_b2b.log</file>
+        <encoder>
+            <pattern>${encoder_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="async_rolling" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>512</queueSize>
+        <appender-ref ref="rolling"/>
+    </appender>
+
+    <appender name="datacollection" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${file_path}/DC/datacollect.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${file_path}/DC/datacollect.%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%msg%n</pattern>
+            <charset>UTF-8</charset>
+            <immediateFlush>true</immediateFlush>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="async_rolling"/>
+    </root>
+
+    <logger name="com.jshop.log.DataCollectionLog" level="info" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="datacollection"/>
+    </logger>
+
+    <logger name="com.jshop" level="error"/>
+    <logger name="org.springframework" level="error"/>
+    <logger name="org.mybatis" level="error"/>
+    <logger name="java.sql" level="error"/>
+</configuration>

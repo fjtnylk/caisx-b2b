@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: jshop-app-b2b
+  profiles:
+    active: test
